@@ -30,30 +30,32 @@ li {
 }
 
 a {
-	text-decoration: none;
-	font-weight: lighter;
-	font-style: italic;
-	font-weight: bold;
-	color: deepskyblue;
-	background-color: rgb(92, 92, 92);
+  color: black;
+  padding: 3px 8px;
+  font-weight: bold;
+  font-style: italic;
 	border-radius: 10px;
-	padding: 3px 8px;
+  font-weight: lighter;
+  text-decoration: none;
 	border: #000000 double 2px;
+  background-color: lightgrey;
+	box-shadow: -5px -10px 10px gray;
 }
 
 a:hover,
 a:focus {
-	color: rgb(92, 92, 92);
-	background-color: #00b7ff;
+	color: lightgrey;
+	background-color: black;
 	transform: translateX(0.5px) rotate(-1deg) scale(0.99);
 }
 
 button{
+  color:black;
   margin-top: 30px;
   padding: 3px 8px;
   border-radius: 10px;
-	background-color: rgb(92, 92, 92);
-  color: deepskyblue;
+	background-color: lightgrey;
+  box-shadow: -5px -10px 10px gray;
 }
 
 button:not(:last-child) {
