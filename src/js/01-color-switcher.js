@@ -24,8 +24,8 @@ const onInterval = () =>{
 
 //Funcion para detener la ejecucion  del intervalo
 const clearInterval = () => {
-    start.disabled = false ;
-    stop.disabled = true;
+    startButton.disabled = false ;
+    stopButton.disabled = true;
 // Metodo para detener el intervalo de tiempo de start
     clearInterval(intervalId);
 }
