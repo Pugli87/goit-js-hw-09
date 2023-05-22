@@ -16,8 +16,8 @@ const changeBackgroungColor = () => {
 
 //Funcion para iniciar la ejecucion del intervalo
 const onInterval = () =>{
-    start.disabled = true;
-    stop.disabled = false;
+    startButton.disabled = true;
+    stopButton.disabled = false;
 // Metodo interval para repeteir el codigo cada segundo
     intervalId = setInterval(changeBackgroungColor, 1000);
 };
