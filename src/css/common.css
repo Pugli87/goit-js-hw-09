@@ -39,7 +39,6 @@ a {
   text-decoration: none;
 	border: #000000 double 2px;
   background-color: lightgrey;
-	box-shadow: -5px -10px 10px gray;
 }
 
 a:hover,
@@ -55,11 +54,15 @@ button{
   padding: 3px 8px;
   border-radius: 10px;
 	background-color: lightgrey;
-  box-shadow: -5px -10px 10px gray;
+  cursor: pointer;
 }
 
 button:not(:last-child) {
   margin-right: 20px;
+}
+button:hover{
+  background-color: black;
+  color: lightgray;
 }
 
 input{
