@@ -66,3 +66,29 @@ input{
   border-radius: 10px;
   background-color: lightgray;
 }
+
+.timer{
+  display: flex;
+  margin-right: 5px;
+  text-align: center;
+  
+  margin-top:  20px;
+}
+
+.field{
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  margin-right: 10px;
+}
+
+.value{
+  flex-direction: column;
+  text-align: center;
+  font-size: 30px;
+}
+
+.label{
+  flex-direction: column;
+  margin-right: 5px;
+}
