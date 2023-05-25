@@ -1,19 +1,118 @@
-// import flatpickr from "flatpickr";
-// import "flatpickr/dist/flatpickr.min.css";
-// import Notiflix from 'notiflix';
+/*import flatpickr from "flatpickr";
+import "flatpickr/dist/flatpickr.min.css";
+import Notiflix from "notiflix";
 
-// const options = {
-//     enableTime: true,
-//     time_24hr: true,
-//     defaultDate: new Date(),
-//     minuteIncrement: 1,
-//     onClose(selectedDates) {
-//       console.log(selectedDates[0]);
-//     },
-//   };
+// constantes funcionales
+const datetimePicker = document.getElementById("datetime-picker");
+const startButton = document.querySelector("[data-start]");
+const stopButton = document.querySelector("[data-stop]");
+const resetButton = document.querySelector("[data-reset]");
+// constantes de tiempo
+const daysElement = document.querySelector("[data-days]");
+const hoursElement = document.querySelector("[data-hours]");
+const minutesElement = document.querySelector("[data-minutes]");
+const secondsElement = document.querySelector("[data-seconds]");
+let countInterval;
+let remainingTime; // Variable para almacenar el tiempo restante
+const options = {
+  enableTime: true,
+  time_24hr: true,
+  defaultDate: new Date(),
+  minuteIncrement: 1,
+  onClose(selectedDates) {
+    const selectedDate = selectedDates[0];
+    if (selectedDate < Date.now()) {
+      Notiflix.Notify.failure("Please choose a date in the future");
+      
+    } else {
+      startButton.disabled = false;
+    }
+  },
+};
+
+flatpickr(datetimePicker, options);
+
+function convertMs(ms) {
+  const duration = new Date(ms);
+
+  const days = duration.getUTCDate()-1;
+  const hours = duration.getUTCHours();
+  const minutes = duration.getUTCMinutes();
+  const seconds = duration.getUTCSeconds();
+
+  return { days, hours, minutes, seconds };
+}
+
+
+function addLeadingZero(value) {
+  return value.toString().padStart(2, "0");
+}
+
+function startCountdown() {
+  startButton.setAttribute("hidden", "");
+  stopButton.removeAttribute("hidden");
+  stopButton.disabled = false;
+  const selectedDate = new Date(datetimePicker.value).getTime();
+  const currentDate = Date.now();
+  const remainingTime = selectedDate - currentDate;
+  if (remainingTime <= 0) {
+    stopCountdown();
+    startButton.removeAttribute("hidden");
+    startButton.disabled = true;
+    return;
+  }
+
+  const { days, hours, minutes, seconds } = convertMs(remainingTime);
+
+  daysElement.textContent = addLeadingZero(days);
+  hoursElement.textContent = addLeadingZero(hours);
+  minutesElement.textContent = addLeadingZero(minutes);
+  secondsElement.textContent = addLeadingZero(seconds);
+}
+
+function stopCountdown() {
+  clearInterval(countInterval);
+  Notiflix.Notify.success("Countdown completed!");
+  stopButton.setAttribute("hidden", "");
+}
+
+
+
+startButton.addEventListener("click", () => {
+  countInterval = setInterval(startCountdown, 1000);
+  startButton.disabled = true;
+});
+
+stopButton.addEventListener("click", () => {
+  clearInterval(countInterval);
+  stopButton.disabled=true;
+  resetButton.removeAttribute("hidden");
+  stopButton.setAttribute("hidden", false);
+});
+
+resetButton.addEventListener("click", () => {
+  location.reload();
+});
+
+Notiflix.Notify.init();*/
+
 
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
+import Notiflix from "notiflix";
+
+// constantes funcionales
+const datetimePicker = document.getElementById("datetime-picker");
+const startButton = document.querySelector("[data-start]");
+const stopButton = document.querySelector("[data-stop]");
+const resetButton = document.querySelector("[data-reset]");
+// constantes de tiempo
+const daysElement = document.querySelector("[data-days]");
+const hoursElement = document.querySelector("[data-hours]");
+const minutesElement = document.querySelector("[data-minutes]");
+const secondsElement = document.querySelector("[data-seconds]");
+let countInterval;
+let remainingTime; // Variable para almacenar el tiempo restante
 
 const options = {
   enableTime: true,
@@ -22,29 +121,24 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     const selectedDate = selectedDates[0];
-    const currentDate = new Date();
-    
-    if (selectedDate < currentDate) {
-      window.alert("Please choose a date in the future.");
-      return;
+    if (selectedDate < Date.now()) {
+      Notiflix.Notify.failure("Please choose a date in the future");
+      
+    } else {
+      startButton.disabled = false;
     }
   },
 };
 
-flatpickr("#datetime-picker", options);
-
-
+flatpickr(datetimePicker, options);
 
 function convertMs(ms) {
-  const second = 1000;
-  const minute = second * 60;
-  const hour = minute * 60;
-  const day = hour * 24;
-  // Math.floor redondea un numero hacia abajo al entero mas cercano
-  const days = Math.floor(ms / day);
-  const hours = Math.floor((ms % day) / hour);
-  const minutes = Math.floor(((ms % day) % hour) / minute);
-  const seconds = Math.floor((((ms % day) % hour) % minute) / second);
+  const duration = new Date(ms);
+
+  const days = duration.getUTCDate()-1;
+  const hours = duration.getUTCHours();
+  const minutes = duration.getUTCMinutes();
+  const seconds = duration.getUTCSeconds();
 
   return { days, hours, minutes, seconds };
 }
@@ -53,47 +147,62 @@ function addLeadingZero(value) {
   return value.toString().padStart(2, "0");
 }
 
-const startButton = document.querySelector("[data-start]");
-const daysElement = document.querySelector("[data-days]");
-const hoursElement = document.querySelector("[data-hours]");
-const minutesElement = document.querySelector("[data-minutes]");
-const secondsElement = document.querySelector("[data-seconds]");
+function startCountdown() {
+  startButton.setAttribute("hidden", "");
+  stopButton.removeAttribute("hidden");
+  stopButton.disabled = false;
+  const selectedDate = new Date(datetimePicker.value).getTime();
+  const currentDate = Date.now();
+  remainingTime = remainingTime || selectedDate - currentDate; // Usar el tiempo restante almacenado si existe
 
-let countdownInterval;
-//startButton.disabled = true;
-
-startButton.addEventListener("click", () => {
-  const selectedDate = flatpickr.parseDate(document.querySelector("#datetime-picker").value);
-  const currentDate = new Date();
-
-  if (selectedDate <= currentDate) {
-      window.alert("Please choose a future date.");
-      return;
+  if (remainingTime <= 0) {
+    stopCountdown();
+    startButton.removeAttribute("hidden");
+    startButton.disabled = true;
+    return;
   }
 
+  remainingTime -= 1000; // Restar 1 segundo del tiempo restante en cada iteración
+
+  const { days, hours, minutes, seconds } = convertMs(remainingTime);
+
+  daysElement.textContent = addLeadingZero(days);
+  hoursElement.textContent = addLeadingZero(hours);
+  minutesElement.textContent = addLeadingZero(minutes);
+  secondsElement.textContent = addLeadingZero(seconds);
+}
+
+function stopCountdown() {
+  clearInterval(countInterval);
+  Notiflix.Notify.success("Countdown completed!");
+  stopButton.setAttribute("hidden", "");
+
+  // Al detener el contador, almacenar el tiempo restante actual
+  const selectedDate = new Date(datetimePicker.value).getTime();
+  const currentDate = Date.now();
+  remainingTime = selectedDate - currentDate;
+
+  startButton.removeAttribute("hidden");
+  startButton.removeAttribute("disabled");
+  resetButton.removeAttribute("hiddent");
+}
+
+function resetCountdown() {
+  location.reload();
+}
+
+startButton.addEventListener("click", () => {
+  countInterval = setInterval(startCountdown, 1000);
   startButton.disabled = true;
-
-  let countdown = selectedDate.getTime() - currentDate.getTime();
-
-  countdownInterval = setInterval(() => {
-      const remainingTime = convertMs(countdown);
-
-      daysElement.textContent = addLeadingZero(remainingTime.days);
-      hoursElement.textContent = addLeadingZero(remainingTime.hours);
-      minutesElement.textContent = addLeadingZero(remainingTime.minutes);
-      secondsElement.textContent = addLeadingZero(remainingTime.seconds);
-
-      countdown -= 1000;
-
-      if (countdown < 0) {
-      clearInterval(countdownInterval);
-      daysElement.textContent = "00";
-      hoursElement.textContent = "00";
-      minutesElement.textContent = "00";
-      secondsElement.textContent = "00";
-
-      Notiflix.Notify.success("Countdown finished!");
-      }
-  }, 1000);
 });
+
+stopButton.addEventListener("click", () => {
+  clearInterval(countInterval);
+  stopButton.disabled = true;
+  stopCountdown();
+});
+
+resetButton.addEventListener("click", resetCountdown);
+
+Notiflix.Notify.init();
 

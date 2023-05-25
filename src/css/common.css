@@ -61,6 +61,10 @@ button:not(:last-child) {
   margin-right: 20px;
 }
 
+button:disabled{
+  color: grey;
+}
+
 input{
   padding: 3px 8px;
   border-radius: 10px;
