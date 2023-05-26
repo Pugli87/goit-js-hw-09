@@ -54,7 +54,7 @@ function startCountdown() {
   stopButton.disabled = false;
   const selectedDate = new Date(datetimePicker.value).getTime();
   const currentDate = Date.now();
-  const remainingTime = selectedDate - currentDate;
+  remainingTime = selectedDate - currentDate;
   if (remainingTime <= 0) {
     stopCountdown();
     startButton.removeAttribute("hidden");
@@ -76,23 +76,28 @@ function stopCountdown() {
   stopButton.setAttribute("hidden", "");
 }
 
-
-
-startButton.addEventListener("click", () => {
-  countInterval = setInterval(startCountdown, 1000);
+function startBtn() {
+    countInterval = setInterval(startCountdown, 1000);
   startButton.disabled = true;
-});
+}
 
-stopButton.addEventListener("click", () => {
-  clearInterval(countInterval);
+function StopBtn() {
+    clearInterval(countInterval);
   stopButton.disabled=true;
   resetButton.removeAttribute("hidden");
   stopButton.setAttribute("hidden", false);
-});
+}
 
-resetButton.addEventListener("click", () => {
+function resetBtn() {
   location.reload();
-});
+  selectedDate = new Date(datetimePicker.value).getTime();
+}
+
+startButton.addEventListener("click", startBtn);
+
+stopButton.addEventListener("click", StopBtn);
+
+resetButton.addEventListener("click", resetBtn);
 
 Notiflix.Notify.init();
 
