@@ -68,23 +68,26 @@ function startCountdown() {
   hoursElement.textContent = addLeadingZero(hours);
   minutesElement.textContent = addLeadingZero(minutes);
   secondsElement.textContent = addLeadingZero(seconds);
+  console.log(secondsElement.textContent)
 }
 
 function stopCountdown() {
   clearInterval(countInterval);
   Notiflix.Notify.success("Countdown completed!");
-  stopButton.setAttribute("hidden", "");
+  stopButton.setAttribute("hidden", true);
 }
 
 function startBtn() {
-    countInterval = setInterval(startCountdown, 1000);
+  countInterval = setInterval(startCountdown, 1000);
   startButton.disabled = true;
 }
 
 function StopBtn() {
-    clearInterval(countInterval);
-  stopButton.disabled=true;
+  clearInterval(countInterval);
+  //stopButton.disabled=true;
+  startButton.removeAttribute("hidden");
   resetButton.removeAttribute("hidden");
+  startButton.disabled=false;
   stopButton.setAttribute("hidden", false);
 }
 
