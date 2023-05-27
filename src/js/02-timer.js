@@ -68,7 +68,6 @@ function startCountdown() {
   hoursElement.textContent = addLeadingZero(hours);
   minutesElement.textContent = addLeadingZero(minutes);
   secondsElement.textContent = addLeadingZero(seconds);
-  console.log(secondsElement.textContent)
 }
 
 function stopCountdown() {
