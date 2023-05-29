@@ -7,13 +7,17 @@ const datetimePicker = document.getElementById("datetime-picker");
 const startButton = document.querySelector("[data-start]");
 const stopButton = document.querySelector("[data-stop]");
 const resetButton = document.querySelector("[data-reset]");
+
 // constantes de tiempo
 const daysElement = document.querySelector("[data-days]");
 const hoursElement = document.querySelector("[data-hours]");
 const minutesElement = document.querySelector("[data-minutes]");
 const secondsElement = document.querySelector("[data-seconds]");
+
+// Variable para almacenamiento
 let countInterval;
-let remainingTime; // Variable para almacenar el tiempo restante
+let remainingTime; 
+
 const options = {
   enableTime: true,
   time_24hr: true,
@@ -30,9 +34,9 @@ const options = {
   },
 };
 
-flatpickr(datetimePicker, options);
 
-function convertMs(ms) {
+
+const convertMs = (ms) => {
   const duration = new Date(ms);
 
   const days = duration.getUTCDate()-1;
@@ -43,12 +47,11 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
-
-function addLeadingZero(value) {
+const addLeadingZero = (value) => {
   return value.toString().padStart(2, "0");
 }
 
-function startCountdown() {
+const startCountdown = () => {
   startButton.setAttribute("hidden", "");
   stopButton.removeAttribute("hidden");
   stopButton.disabled = false;
@@ -70,30 +73,31 @@ function startCountdown() {
   secondsElement.textContent = addLeadingZero(seconds);
 }
 
-function stopCountdown() {
+const stopCountdown = () => {
   clearInterval(countInterval);
   Notiflix.Notify.success("Countdown completed!");
   stopButton.setAttribute("hidden", true);
 }
 
-function startBtn() {
+const startBtn = () => {
   countInterval = setInterval(startCountdown, 1000);
   startButton.disabled = true;
 }
 
-function StopBtn() {
+const StopBtn = () => {
   clearInterval(countInterval);
-  //stopButton.disabled=true;
   startButton.removeAttribute("hidden");
   resetButton.removeAttribute("hidden");
   startButton.disabled=false;
   stopButton.setAttribute("hidden", false);
 }
 
-function resetBtn() {
+const resetBtn = () => {
   location.reload();
   selectedDate = new Date(datetimePicker.value).getTime();
 }
+
+flatpickr(datetimePicker, options);
 
 startButton.addEventListener("click", startBtn);
 
