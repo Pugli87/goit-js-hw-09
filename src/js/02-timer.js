@@ -61,11 +61,13 @@ const startCountdown = () => {
   remainingTime = selectedDate - currentDate;
   if (remainingTime <= 0) {
     stopCountdown();
+    startButton.removeAttribute("hidden");
+    startButton.disabled = true;
     return;
   }
-  
+
   const { days, hours, minutes, seconds } = convertMs(remainingTime);
-  
+
   daysElement.textContent = addLeadingZero(days);
   hoursElement.textContent = addLeadingZero(hours);
   minutesElement.textContent = addLeadingZero(minutes);
@@ -75,11 +77,12 @@ const startCountdown = () => {
 const stopCountdown = () => {
   clearInterval(countInterval);
   Notiflix.Notify.success("Countdown completed!");
+  stopButton.setAttribute("hidden", true);
 }
 
 const startBtn = () => {
   countInterval = setInterval(startCountdown, 1000);
-  location.reload();
+  startButton.disabled = true;
 }
 
 const StopBtn = () => {
