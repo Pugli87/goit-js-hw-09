@@ -2,6 +2,7 @@ import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 import Notiflix from "notiflix";
 
+Notiflix.Notify.init();
 // constantes funcionales
 const datetimePicker = document.getElementById("datetime-picker");
 const startButton = document.querySelector("[data-start]");
@@ -105,5 +106,4 @@ stopButton.addEventListener("click", StopBtn);
 
 resetButton.addEventListener("click", resetBtn);
 
-Notiflix.Notify.init();
 
